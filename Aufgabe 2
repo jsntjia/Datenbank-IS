@@ -1,4 +1,4 @@
-drop table makler;
+drop table agent;
 drop table estate;
 drop table house;
 drop table appartment;
