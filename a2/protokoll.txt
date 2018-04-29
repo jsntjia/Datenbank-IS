@@ -1,0 +1,18 @@
+-- db2 -svtf sql.script
+
+connect to VSISP user vsisp08;
+
+CREATE TRIGGER tr_for_mitspieler
+AFTER INSERT ON Mitspieler 
+REFERENCING NEW AS neuMit
+FOR EACH ROW 
+ INSERT INTO tabelle_for_trigger(infos) VALUES ('Neuen Mitspieler eingefügt mit name: ' || NeuMit.vorname || NeuMit.name); 
+
+CREATE TRIGGER tr_for_wettbewerb
+AFTER DELETE ON wettbewerb 
+REFERENCING OLD AS wett_alt
+FOR EACH ROW MODE DB2SQL
+ INSERT INTO tabelle_for_trigger(text) VALUES ('Wettbewerb gelöscht mit  Name=' || wett_alt.name);
+
+ commit work;
+connect reset;

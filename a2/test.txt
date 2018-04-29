@@ -1,0 +1,7 @@
+-- db2 -svtf sql.script
+connect to VSISP user vsisp08;
+insert into mitspieler(vorname,nachname,passwort) values('nn1','vn1','p1');
+insert into mitspieler(vorname,nachname,passwort) values('nn2','vn2','p2');
+insert into mitspieler(vorname,nachname,passwort) values('nn3','vn3','p3');
+commit work;
+connect reset;

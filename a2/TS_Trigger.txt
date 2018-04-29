@@ -1,0 +1,14 @@
+CREATE TRIGGER TS_Trigger
+     
+ AFTER insert ON Tippsiel
+    
+ REFERENCING NEW AS NeuTS
+    
+ FOR EACH ROW
+     
+ BEGIN ATOMIC
+       
+ INSERT INTO TSLog (infos)
+ VALUES ('neues Tippspiel mit namen:');
+    
+END

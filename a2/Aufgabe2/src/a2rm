@@ -1,0 +1,81 @@
+
+CREATE TABLE Mitspieler 
+(  id INTEGER PRIMARY KEY  NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) , 
+   vorname VARCHAR(250), 
+   nachname VARCHAR(250), 
+   passwort VARCHAR(250)
+
+);
+
+Create table Wettbewerb (name VARCHAR(250) primary key not null);
+
+CREATE TABLE Tippspiel
+( TS_ID INT PRIMARY KEY NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE),
+  name varCHAR (250),
+  wettbewerb VARCHAR(250),
+  verwalter int, 
+
+FOREIGN KEY (verwalter) REFERENCES Mitspieler(id),
+FOREIGN KEY (wettbewerb) REFERENCES Wettbewerb(name)
+
+);
+
+CREATE TABLE spielt
+(
+  mitspieler int NOT NULL, 
+  tippspiel int NOT NULL,
+
+PRIMARY KEY (mitspieler, tippspiel),
+
+FOREIGN KEY (mitspieler) REFERENCES Mitspieler(id),
+FOREIGN KEY (tippspiel) REFERENCES Tippspiel(TS_ID)
+
+);
+
+CREATE TABLE Begegnung
+(
+  begID int primary key NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1,NO CACHE), 
+  datum varchar(250),
+  uhrzeit char(5), 
+  teamA varchar(20),
+  teamB char(250),
+  wettbewerb VARCHAR(250) NOT NULL,
+
+FOREIGN KEY (wettbewerb) REFERENCES Wettbewerb(name)
+
+);
+
+CREATE TABLE Volleyballspiel 
+(
+  begegnung int primary key NOT NULL, 
+
+  saetze_TA int,
+  saetze_TB int,
+FOREIGN KEY (begegnung) REFERENCES Begegnung(begID)
+
+);
+
+CREATE TABLE Fussballspiel 
+(
+  begegnung int primary key NOT NULL, 
+  tor_TA int,
+  tor_TB int,
+  gelb int,
+  rot int,
+FOREIGN KEY (begegnung) REFERENCES Begegnung(begID)
+
+);
+
+CREATE TABLE tipp
+(
+  mitspieler int NOT NULL,
+  begegnung int NOT NULL, 
+  ergebnis_A int,
+  ergebnis_B int,
+  punkte int,
+
+PRIMARY KEY (mitspieler, begegnung),
+FOREIGN KEY (mitspieler) REFERENCES Mitspieler(id),
+FOREIGN KEY (begegnung) REFERENCES Begegnung(begID)
+
+);
